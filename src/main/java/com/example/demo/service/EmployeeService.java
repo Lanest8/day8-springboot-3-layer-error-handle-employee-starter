@@ -40,6 +40,9 @@ public class EmployeeService {
         if (employee.getAge() < 18 || employee.getAge() > 65) {
             throw new InvalidAgeEmployeeException("employee age is invalid");
         }
+        if (employee.getAge() > 30 && employee.getSalary() < 20000) {
+            throw new InvalidAgeEmployeeException("employee age is invalid");
+        }
         return employeeRepository.createEmployee(employee);
     }
 
