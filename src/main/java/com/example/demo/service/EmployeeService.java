@@ -51,6 +51,9 @@ public class EmployeeService {
         if (employee == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee not found with id: " + id);
         }
+        if (!employee.isActiveStatus()) {
+            throw new InvalidAgeEmployeeException("Employee is not active");
+        }
         return employeeRepository.updateEmployee(id, updatedEmployee);
     }
 

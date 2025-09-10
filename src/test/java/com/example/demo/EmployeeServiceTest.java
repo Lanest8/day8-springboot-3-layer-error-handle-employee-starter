@@ -62,4 +62,11 @@ public class EmployeeServiceTest {
         verify(employeeRepository).deleteEmployee(1);
     }
 
+    @Test
+    void should_throw_exception_when_update_a_employee_and_active_false() {
+        Employee employee = new Employee(1, "Mike", 20, "MALE", 10000.0, false);
+        when(employeeRepository.getEmployeeById(anyInt())).thenReturn(employee);
+        assertThrows(InvalidAgeEmployeeException.class, () -> employeeService.updateEmployee(1, employee));
+    }
+
 }
