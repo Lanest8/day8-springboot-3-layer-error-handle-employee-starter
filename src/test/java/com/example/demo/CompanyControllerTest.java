@@ -39,7 +39,7 @@ public class CompanyControllerTest {
     @Test
     void should_return_created_company_when_post_companies() throws Exception {
         Gson gson = new Gson();
-        String requestBody = gson.toJson(new Company("Spring2"));
+        String requestBody = gson.toJson(new Company("Spring"));
         MockHttpServletRequestBuilder request = post("/companies")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestBody);
