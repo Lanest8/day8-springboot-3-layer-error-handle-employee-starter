@@ -163,19 +163,19 @@ public class EmployeeControllerTest {
                 .andExpect(jsonPath("$.age").value(29))
                 .andExpect(jsonPath("$.salary").value(65000.0));
     }
-//
-//    @Test
-//    void should_status_200_and_return_paged_employee_list() throws Exception {
-//        employeeController.createEmployee(johnSmith());
-//        employeeController.createEmployee(janeDoe());
-//        employeeController.createEmployee(janeDoe());
-//        employeeController.createEmployee(janeDoe());
-//        employeeController.createEmployee(janeDoe());
-//        employeeController.createEmployee(janeDoe());
-//
-//        mockMvc.perform(get("/employees?page=1&size=5")
-//                        .contentType(MediaType.APPLICATION_JSON))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.length()").value(5));
-//    }
+
+    @Test
+    void should_status_200_and_return_paged_employee_list() throws Exception {
+        createJohnSmith();
+        createJaneDoe();
+        createJaneDoe();
+        createJaneDoe();
+        createJaneDoe();
+        createJaneDoe();
+
+        mockMvc.perform(get("/employees?page=1&size=5")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(5));
+    }
 }
