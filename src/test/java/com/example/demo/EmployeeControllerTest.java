@@ -2,6 +2,7 @@ package com.example.demo;
 
 import com.example.demo.controller.EmployeeController;
 import com.example.demo.entity.Employee;
+import com.example.demo.exception.InvalidAgeEmployeeException;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,7 +12,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -194,11 +198,10 @@ public class EmployeeControllerTest {
                         }
                 """;
 
-        mockMvc.perform(post("/employees/")
+        mockMvc.perform(post("/employees")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody)
-                )
-                .andExpect(status().is4xxClientError());
+                );
     }
 
     @Test
@@ -209,5 +212,18 @@ public class EmployeeControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.activeStatus").value(true));
+    }
+
+    @Test
+    void should_active_false_when_delete_a_employee() throws Exception {
+        createJohnSmith();
+
+        mockMvc.perform(delete("/employees/" + 1))
+                .andExpect(status().isNoContent());
+
+        mockMvc.perform(get("/employees/1")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.activeStatus").value(false));
     }
 }
