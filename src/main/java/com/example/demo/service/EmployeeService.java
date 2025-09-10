@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.Employee;
+import com.example.demo.exception.InvalidAgeEmployeeException;
 import com.example.demo.repository.EmployeeRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -26,13 +27,19 @@ public class EmployeeService {
 
     public Employee getEmployeeById(@PathVariable int id) {
         Employee employee = employeeRepository.getEmployeeById(id);
-        if (employee == null){
+        if (employee == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee not found with id: " + id);
         }
         return employee;
     }
 
     public Employee createEmployee(@RequestBody Employee employee) {
+        if (employee.getAge() == null) {
+            throw new InvalidAgeEmployeeException("employee age is null");
+        }
+        if (employee.getAge() < 18 || employee.getAge() > 65) {
+            throw new InvalidAgeEmployeeException("employee age is invalid");
+        }
         return employeeRepository.createEmployee(employee);
     }
 
