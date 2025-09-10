@@ -1,11 +1,9 @@
 package com.example.demo.repository;
 
 import com.example.demo.entity.Company;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,5 +47,10 @@ public class CompanyRepository {
             }
         }
         return null;
+    }
+
+    public void deleteCompany(@PathVariable int id) {
+        Company company = getCompanyById(id);
+        companies.remove(company);
     }
 }
