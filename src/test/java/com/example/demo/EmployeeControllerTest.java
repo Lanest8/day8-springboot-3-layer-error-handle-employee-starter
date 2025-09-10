@@ -46,8 +46,8 @@ public class EmployeeControllerTest {
     }
 
     @BeforeEach
-    void cleanEmployees() throws Exception {
-        mockMvc.perform(delete("/employees/all"));
+    void cleanEmployees() {
+        employeeController.empty();
     }
 
     @Test

@@ -15,7 +15,6 @@ import java.util.stream.Stream;
 @RestController
 @RequestMapping("/employees")
 public class EmployeeController {
-    private final List<Employee> employees = new ArrayList<>();
     private final EmployeeService employeeService;
 
     public EmployeeController(EmployeeService employeeService) {
@@ -50,8 +49,7 @@ public class EmployeeController {
         employeeService.deleteEmployee(id);
     }
 
-    @DeleteMapping("/all")
     public void empty() {
-        employees.clear();
+        employeeService.deleteEmployeeAll();
     }
 }

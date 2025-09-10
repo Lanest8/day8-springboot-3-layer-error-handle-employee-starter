@@ -44,4 +44,8 @@ public class EmployeeService {
     public void deleteEmployee(@PathVariable int id) {
         employeeRepository.deleteEmployee(id);
     }
+
+    public void deleteEmployeeAll() {
+        employeeRepository.deleteEmployeeAll();
+    }
 }
