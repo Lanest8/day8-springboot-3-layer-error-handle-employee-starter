@@ -199,9 +199,9 @@ public class EmployeeControllerTest {
                 """;
 
         mockMvc.perform(post("/employees")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(requestBody)
-                );
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(requestBody)
+        );
     }
 
     @Test
@@ -225,5 +225,22 @@ public class EmployeeControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.activeStatus").value(false));
+    }
+
+    @Test
+    void should_throw_exception_when_update_a_employee_and_active_false() throws Exception {
+        createJohnSmith();
+        Gson gson = new Gson();
+        String updateJohn = gson.toJson(new Employee("John Smith", 29, "MALE", 65000.0, false));
+
+        mockMvc.perform(put("/employees/" + 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(updateJohn)
+        );
+
+        mockMvc.perform(put("/employees/" + 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(updateJohn)
+        );
     }
 }

@@ -55,13 +55,6 @@ public class Employee {
         this.activeStatus = true;
     }
 
-    public Employee(String name, Integer age, String gender, Double salary) {
-        this.name = name;
-        this.age = age;
-        this.gender = gender;
-        this.salary = salary;
-    }
-
     public Employee(Integer id, String name, Integer age, String gender, Double salary, boolean activeStatus) {
         this.id = id;
         this.name = name;
@@ -72,5 +65,13 @@ public class Employee {
     }
 
     public Employee() {
+    }
+
+    public Employee(String name, Integer age, String gender, Double salary, boolean activeStatus) {
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        this.salary = salary;
+        this.activeStatus = activeStatus;
     }
 }
