@@ -45,11 +45,20 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    void should_return_active_true_when_create_a_employee() {
+    void should_active_true_when_create_a_employee() {
         Employee employee = new Employee(null, "Tom", 20, "MALE", 20000.0);
         when(employeeRepository.createEmployee(employee)).thenReturn(employee);
         Employee employeeResult = employeeService.createEmployee(employee);
         assertTrue(employeeResult.isActiveStatus());
     }
+//
+//    @Test
+//    void should_active_false_when_delete_a_employee() {
+//        Employee employee = new Employee(null, "Tom", 20, "MALE", 20000.0);
+//        when(employeeRepository.createEmployee(employee)).thenReturn(employee);
+//        Employee employeeResult = employeeService.createEmployee(employee);
+//        employeeService.deleteEmployee(1);
+//        assertFalse(employeeResult.isActiveStatus());
+//    }
 
 }

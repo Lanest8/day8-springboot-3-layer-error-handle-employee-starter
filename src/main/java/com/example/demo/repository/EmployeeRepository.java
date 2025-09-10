@@ -62,8 +62,9 @@ public class EmployeeRepository {
     }
 
     public void deleteEmployee(@PathVariable int id) {
-        Employee employee = getEmployeeById(id);
-        employees.remove(employee);
+        employees.stream()
+                .filter(e -> e.getId() == id)
+                .forEach(e -> e.setActiveStatus(false));
     }
 
     public void deleteEmployeeAll() {
