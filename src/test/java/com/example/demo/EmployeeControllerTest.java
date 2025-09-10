@@ -108,15 +108,15 @@ public class EmployeeControllerTest {
                 .andExpect(jsonPath("$.gender").value("FEMALE"))
                 .andExpect(jsonPath("$.salary").value(60000.0));
     }
-//
-//    @Test
-//    void should_return_200_with_empty_body_when_no_employee() throws Exception {
-//        mockMvc.perform(get("/employees")
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content("{}"))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$").isEmpty());
-//    }
+
+    @Test
+    void should_return_200_with_empty_body_when_no_employee() throws Exception {
+        mockMvc.perform(get("/employees")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{}"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isEmpty());
+    }
 //
 //    @Test
 //    void should_return_200_with_employee_list() throws Exception {
