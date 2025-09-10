@@ -226,6 +226,6 @@ public class EmployeeControllerTest {
         mockMvc.perform(put("/employees/" + 1)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(updateJohn)
-        ).andExpect(status().isBadRequest());
+        ).andExpect(status().isGone());
     }
 }

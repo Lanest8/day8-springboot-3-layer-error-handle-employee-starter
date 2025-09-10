@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.Employee;
+import com.example.demo.exception.InvalidActiveEmployeeException;
 import com.example.demo.exception.InvalidAgeEmployeeException;
 import com.example.demo.repository.EmployeeRepository;
 import org.springframework.http.HttpStatus;
@@ -52,7 +53,7 @@ public class EmployeeService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee not found with id: " + id);
         }
         if (!employee.isActiveStatus()) {
-            throw new InvalidAgeEmployeeException("Employee is not active");
+            throw new InvalidActiveEmployeeException("Employee is not active");
         }
         return employeeRepository.updateEmployee(id, updatedEmployee);
     }
