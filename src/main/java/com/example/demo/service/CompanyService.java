@@ -48,4 +48,8 @@ public class CompanyService {
         }
         companyRepository.deleteCompany(id);
     }
+
+    public void deleteAllCompanies() {
+        companyRepository.deleteAllCompanies();
+    }
 }
