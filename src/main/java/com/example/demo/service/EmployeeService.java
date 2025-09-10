@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class EmployeeService {
@@ -34,5 +35,9 @@ public class EmployeeService {
 
     public Employee createEmployee(@RequestBody Employee employee) {
         return employeeRepository.createEmployee(employee);
+    }
+
+    public Employee updateEmployee(@PathVariable int id, @RequestBody Employee updatedEmployee) {
+        return employeeRepository.updateEmployee(id, updatedEmployee);
     }
 }

@@ -41,21 +41,7 @@ public class EmployeeController {
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Employee updateEmployee(@PathVariable int id, @RequestBody Employee updatedEmployee) {
-        Employee found = null;
-        for (Employee e : employees) {
-            if (Objects.equals(e.getId(), id)) {
-                found = e;
-                break;
-            }
-        }
-        if (found == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee not found with id: " + id);
-        }
-        found.setName(updatedEmployee.getName());
-        found.setAge(updatedEmployee.getAge());
-        found.setGender(updatedEmployee.getGender());
-        found.setSalary(updatedEmployee.getSalary());
-        return found;
+        return employeeService.updateEmployee(id, updatedEmployee);
     }
 
     @DeleteMapping("/{id}")
