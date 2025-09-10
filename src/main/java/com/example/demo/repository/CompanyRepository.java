@@ -41,12 +41,10 @@ public class CompanyRepository {
     }
 
     public Company getCompanyById(@PathVariable int id) {
-        for (Company c : companies) {
-            if (c.getId().equals(id)) {
-                return c;
-            }
-        }
-        return null;
+        return companies.stream()
+                .filter(company -> company.getId().equals(id))
+                .findFirst()
+                .orElse(null);
     }
 
     public void deleteCompany(@PathVariable int id) {
