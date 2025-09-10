@@ -1,12 +1,5 @@
 package com.example.demo;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class Employee {
     private Integer id;
     private String name;
@@ -42,5 +35,16 @@ public class Employee {
     }
     public void setSalary(double salary) {
         this.salary = salary;
+    }
+
+    public Employee(Integer id, String name, Integer age, String gender, Double salary) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        this.salary = salary;
+    }
+
+    public Employee() {
     }
 }
