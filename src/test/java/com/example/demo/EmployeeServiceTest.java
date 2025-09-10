@@ -10,8 +10,7 @@ import org.mockito.Mock;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -43,6 +42,14 @@ public class EmployeeServiceTest {
     void should_throw_exception_when_create_a_employee_of_age_greater_than_30_and_salary_less_than_20000() {
         Employee employee = new Employee(null, "Tom", 31, "MALE", 10000.0);
         assertThrows(InvalidAgeEmployeeException.class, () -> employeeService.createEmployee(employee));
+    }
+
+    @Test
+    void should_return_active_true_when_create_a_employee() {
+        Employee employee = new Employee(null, "Tom", 20, "MALE", 20000.0);
+        when(employeeRepository.createEmployee(employee)).thenReturn(employee);
+        Employee employeeResult = employeeService.createEmployee(employee);
+        assertTrue(employeeResult.isActiveStatus());
     }
 
 }
