@@ -31,13 +31,17 @@ public class EmployeeControllerTest {
 //        return e;
 //    }
 
-//    private static Employee johnSmith() {
-//        return employee("John Smith", 28, "MALE", 60000.0);
-//    }
-//
-//    private static Employee janeDoe() {
-//        return employee("Jane Doe", 22, "FEMALE", 60000.0);
-//    }
+    private void createJohnSmith() throws Exception {
+        Gson gson = new Gson();
+        String jane = gson.toJson(new Employee(null, "Jane Doe", 22, "FEMALE", 60000.0));
+        mockMvc.perform(post("/employees").contentType(MediaType.APPLICATION_JSON).content(jane));
+    }
+
+    private void createJaneDoe() throws Exception {
+        Gson gson = new Gson();
+        String john = gson.toJson(new Employee(null, "Jane Doe", 28, "MALE", 60000.0));
+        mockMvc.perform(post("/employees").contentType(MediaType.APPLICATION_JSON).content(john));
+    }
 
     @BeforeEach
     void cleanEmployees() {
@@ -55,14 +59,8 @@ public class EmployeeControllerTest {
     void should_return_all_employee() throws Exception {
 //        employeeController.createEmployee(johnSmith());
 //        employeeController.createEmployee(janeDoe());
-        Gson gson = new Gson();
-        String jane = gson.toJson(new Employee(null, "Jane Doe", 22, "FEMALE", 60000.0));
-        String john = gson.toJson(new Employee(null, "Jane Doe", 28, "MALE", 60000.0));
-
-        mockMvc.perform(post("/employees").contentType(MediaType.APPLICATION_JSON).content(jane));
-        mockMvc.perform(post("/employees").contentType(MediaType.APPLICATION_JSON).content(john));
-
-
+        createJohnSmith();
+        createJaneDoe();
 
         mockMvc.perform(get("/employees")
                         .contentType(MediaType.APPLICATION_JSON))
