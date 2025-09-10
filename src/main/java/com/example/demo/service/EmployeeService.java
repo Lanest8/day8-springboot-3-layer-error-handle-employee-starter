@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class EmployeeService {
@@ -45,7 +44,7 @@ public class EmployeeService {
         employeeRepository.deleteEmployee(id);
     }
 
-    public void deleteEmployeeAll() {
+    public void deleteAllEmployees() {
         employeeRepository.deleteEmployeeAll();
     }
 }
