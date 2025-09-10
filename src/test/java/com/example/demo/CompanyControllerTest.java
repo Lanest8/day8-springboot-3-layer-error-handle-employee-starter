@@ -2,6 +2,7 @@ package com.example.demo;
 
 import com.example.demo.controller.CompanyController;
 import com.example.demo.entity.Company;
+import com.google.gson.Gson;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,11 +38,8 @@ public class CompanyControllerTest {
 
     @Test
     void should_return_created_company_when_post_companies() throws Exception {
-        String requestBody = """
-                {
-                    "name": "Spring"
-                }
-                """;
+        Gson gson = new Gson();
+        String requestBody = gson.toJson(new Company("Spring2"));
         MockHttpServletRequestBuilder request = post("/companies")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestBody);
@@ -76,11 +74,8 @@ public class CompanyControllerTest {
     @Test
     void should_return_company_when_put_with_id_found() throws Exception {
         Company company = createCompany();
-        String requestBody = """
-                {
-                    "name": "Spring2"
-                }
-                """;
+        Gson gson = new Gson();
+        String requestBody = gson.toJson(new Company("Spring2"));
         MockHttpServletRequestBuilder request = put("/companies/" + company.getId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestBody);
@@ -129,11 +124,8 @@ public class CompanyControllerTest {
 
     @Test
     void should_status_404_when_put_company_by_id_not_found() throws Exception {
-        String requestBody = """
-                {
-                    "name": "Spring2"
-                }
-                """;
+        Gson gson = new Gson();
+        String requestBody = gson.toJson(new Company("Spring2"));
         MockHttpServletRequestBuilder request = put("/companies/999")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestBody);
