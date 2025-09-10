@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.Company;
+import com.example.demo.service.CompanyService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -12,6 +13,10 @@ import java.util.List;
 @RequestMapping("/companies")
 public class CompanyController {
     private final List<Company> companies = new ArrayList<>();
+    private final CompanyService companyService;
+    public CompanyController(CompanyService companyService) {
+        this.companyService = companyService;
+    }
 
     public void empty() {
         companies.clear();
@@ -19,15 +24,7 @@ public class CompanyController {
 
     @GetMapping
     public List<Company> getCompanies(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size) {
-        if (page != null && size != null) {
-            int start = (page - 1) * size;
-            int end = Math.min(start + size, companies.size());
-            if (start >= companies.size()) {
-                return new ArrayList<>();
-            }
-            return companies.subList(start, end);
-        }
-        return companies;
+        return companyService.getCompanies(page, size);
     }
 
     @PostMapping
