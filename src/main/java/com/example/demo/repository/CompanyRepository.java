@@ -31,13 +31,9 @@ public class CompanyRepository {
     }
 
     public Company updateCompany(@PathVariable int id, @RequestBody Company updatedCompany) {
-        for (Company c : companies) {
-            if (c.getId().equals(id)) {
-                c.setName(updatedCompany.getName());
-                return c;
-            }
-        }
-        return null;
+        Company found = getCompanyById(id);
+        found.setName(updatedCompany.getName());
+        return found;
     }
 
     public Company getCompanyById(@PathVariable int id) {
