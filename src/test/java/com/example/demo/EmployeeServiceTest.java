@@ -11,6 +11,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -51,14 +53,13 @@ public class EmployeeServiceTest {
         Employee employeeResult = employeeService.createEmployee(employee);
         assertTrue(employeeResult.isActiveStatus());
     }
-//
-//    @Test
-//    void should_active_false_when_delete_a_employee() {
-//        Employee employee = new Employee(null, "Tom", 20, "MALE", 20000.0);
-//        when(employeeRepository.createEmployee(employee)).thenReturn(employee);
-//        Employee employeeResult = employeeService.createEmployee(employee);
-//        employeeService.deleteEmployee(1);
-//        assertFalse(employeeResult.isActiveStatus());
-//    }
+
+    @Test
+    void should_active_false_when_delete_a_employee() {
+        Employee employee = new Employee(1, "Mike", 20, "MALE", 10000.0);
+        when(employeeRepository.getEmployeeById(anyInt())).thenReturn(employee);
+        employeeService.deleteEmployee(1);
+        verify(employeeRepository).deleteEmployee(1);
+    }
 
 }
