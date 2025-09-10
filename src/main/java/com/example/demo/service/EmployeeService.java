@@ -37,6 +37,11 @@ public class EmployeeService {
     }
 
     public Employee updateEmployee(@PathVariable int id, @RequestBody Employee updatedEmployee) {
+        Employee employee = employeeRepository.getEmployeeById(id);
+
+        if (employee == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee not found with id: " + id);
+        }
         return employeeRepository.updateEmployee(id, updatedEmployee);
     }
 
