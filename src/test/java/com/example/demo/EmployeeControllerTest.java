@@ -180,4 +180,22 @@ public class EmployeeControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(5));
     }
+
+    @Test
+    void should_throw_exception_when_create_a_employee_of_greater_than_65_or_less_than_18() throws Exception {
+        String requestBody = """
+                        {
+                            "name": "John Smith",
+                            "age": 10,
+                            "gender": "MALE",
+                            "salary": 60000.0
+                        }
+                """;
+
+        mockMvc.perform(post("/employees/")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody)
+                )
+                .andExpect(status().is4xxClientError());
+    }
 }
