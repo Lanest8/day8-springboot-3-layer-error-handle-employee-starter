@@ -31,9 +31,9 @@ public class EmployeeRepository {
 
     public Employee getEmployeeById(@PathVariable int id) {
         return employees.stream()
-                .filter(employee -> employee.getId() == id)
+                .filter(employee -> Objects.equals(employee.getId(), id))
                 .findFirst()
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee not found with id: " + id));
+                .orElse(null);
     }
 
     public Employee createEmployee(@RequestBody Employee employee) {
