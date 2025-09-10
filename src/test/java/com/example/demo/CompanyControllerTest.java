@@ -24,6 +24,12 @@ public class CompanyControllerTest {
     @Autowired
     private CompanyController companyController;
 
+    private Company createCompany() {
+        Company spring = new Company();
+        spring.setName("Spring");
+        return companyController.createCompany(spring);
+    }
+
     @BeforeEach
     void cleanCompanies() {
         companyController.empty();
@@ -48,9 +54,7 @@ public class CompanyControllerTest {
 
     @Test
     void should_return_all_companies_when_no_param() throws Exception {
-        Company spring = new Company();
-        spring.setName("Spring");
-        companyController.createCompany(spring);
+        createCompany();
 
         mockMvc.perform(get("/companies").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -59,9 +63,7 @@ public class CompanyControllerTest {
 
     @Test
     void should_return_company_when_get_id_found() throws Exception {
-        Company spring = new Company();
-        spring.setName("Spring");
-        Company company = companyController.createCompany(spring);
+        Company company = createCompany();
 
         MockHttpServletRequestBuilder request = get("/companies/" + company.getId())
                 .contentType(MediaType.APPLICATION_JSON);
@@ -73,9 +75,7 @@ public class CompanyControllerTest {
 
     @Test
     void should_return_company_when_put_with_id_found() throws Exception {
-        Company spring = new Company();
-        spring.setName("Spring");
-        Company company = companyController.createCompany(spring);
+        Company company = createCompany();
         String requestBody = """
                 {
                     "name": "Spring2"
@@ -93,9 +93,7 @@ public class CompanyControllerTest {
 
     @Test
     void should_return_no_content_when_delete_id_found() throws Exception {
-        Company spring = new Company();
-        spring.setName("Spring");
-        Company company = companyController.createCompany(spring);
+        Company company = createCompany();
 
         MockHttpServletRequestBuilder request = delete("/companies/" + company.getId())
                 .contentType(MediaType.APPLICATION_JSON);
@@ -106,9 +104,7 @@ public class CompanyControllerTest {
 
     @Test
     void should_return_truncated_companies_when_page_size_is_limit() throws Exception {
-        Company spring = new Company();
-        spring.setName("Spring");
-        companyController.createCompany(spring);
+        Company spring = createCompany();
         companyController.createCompany(spring);
         companyController.createCompany(spring);
         companyController.createCompany(spring);
