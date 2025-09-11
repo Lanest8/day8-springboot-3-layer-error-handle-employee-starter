@@ -35,7 +35,10 @@ public class EmployeeServiceTest {
         Employee employee = new Employee(1, "Tom", 20, "MALE", 20000.0);
         when(employeeRepository.save(employee)).thenReturn(employee);
         Employee employeeResult = employeeMapper.toEntity(employeeService.createEmployee(employeeMapper.toRequest(employee)));
-        assertEquals(employee, employeeResult);
+        assertEquals(employee.getId(), employeeResult.getId());
+        assertEquals(employee.getName(), employeeResult.getName());
+        assertEquals(employee.getAge(), employeeResult.getAge());
+        assertEquals(employee.getGender(), employeeResult.getGender());
     }
 
     @Test
