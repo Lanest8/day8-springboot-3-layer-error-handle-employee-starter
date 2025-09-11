@@ -1,6 +1,5 @@
 package com.example.demo;
 
-import com.example.demo.controller.EmployeeController;
 import com.example.demo.entity.Employee;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -20,6 +20,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class EmployeeControllerTest {
     @Autowired
     private MockMvc mockMvc;
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     private void createJohnSmith() throws Exception {
         Gson gson = new Gson();
@@ -34,8 +37,10 @@ public class EmployeeControllerTest {
     }
 
     @BeforeEach
-    void cleanEmployees() throws Exception {
-        mockMvc.perform(delete("/employees/all"));
+    void cleanEmployees() {
+//        jdbcTemplate.execute("truncate table employee;");
+        jdbcTemplate.execute("delete from employee;");
+        jdbcTemplate.execute("ALTER TABLE employee AUTO_INCREMENT=1");
     }
 
     @Test
