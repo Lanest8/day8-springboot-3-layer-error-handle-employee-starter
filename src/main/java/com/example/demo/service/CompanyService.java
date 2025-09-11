@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.CompanyRequest;
 import com.example.demo.dto.CompanyResponse;
 import com.example.demo.entity.Company;
 import com.example.demo.repository.ICompanyRepository;
@@ -33,12 +34,13 @@ public class CompanyService {
         }
     }
 
-    public CompanyResponse createCompany(Company company) {
-        return toResponse(companyRepository.save(company));
+    public CompanyResponse createCompany(CompanyRequest companyRequest) {
+        return toResponse(companyRepository.save(toEntity(companyRequest)));
     }
 
-    public CompanyResponse updateCompany(int id, Company updatedCompany) {
+    public CompanyResponse updateCompany(int id, CompanyRequest companyRequest) {
         Company company = toEntity(getCompanyById(id));
+        Company updatedCompany = toEntity(companyRequest);
         updatedCompany.setId(id);
         if (!Objects.isNull(updatedCompany.getName())) {
             company.setName(updatedCompany.getName());

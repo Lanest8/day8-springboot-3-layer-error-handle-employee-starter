@@ -1,9 +1,11 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.CompanyRequest;
 import com.example.demo.dto.CompanyResponse;
 import com.example.demo.entity.Company;
 import com.example.demo.service.CompanyService;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -25,14 +27,14 @@ public class CompanyController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CompanyResponse createCompany(@RequestBody Company company) {
-        return companyService.createCompany(company);
+    public CompanyResponse createCompany(@Validated @RequestBody CompanyRequest companyRequest) {
+        return companyService.createCompany(companyRequest);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public CompanyResponse updateCompany(@PathVariable int id, @RequestBody Company updatedCompany) {
-        return companyService.updateCompany(id, updatedCompany);
+    public CompanyResponse updateCompany(@PathVariable int id, @Validated @RequestBody CompanyRequest companyRequest) {
+        return companyService.updateCompany(id, companyRequest);
     }
 
     @GetMapping("/{id}")
