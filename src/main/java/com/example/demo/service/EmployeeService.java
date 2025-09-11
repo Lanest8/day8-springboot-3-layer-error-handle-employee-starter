@@ -68,11 +68,12 @@ public class EmployeeService {
         return employeeMapper.toResponse(employeeRepository.save(employee));
     }
 
-    public EmployeeResponse updateEmployee(int id, Employee updatedEmployee) {
+    public EmployeeResponse updateEmployee(int id, EmployeeRequest employeeRequest) {
         Employee employee = employeeMapper.toEntity(getEmployeeById(id));
         if (!employee.isActive()) {
             throw new InvalidActiveEmployeeException("Employee is not active");
         }
+        Employee updatedEmployee = employeeMapper.toEntity(employeeRequest);
         updatedEmployee.setId(id);
         if (!Objects.isNull(updatedEmployee.getName())) {
             employee.setName(updatedEmployee.getName());

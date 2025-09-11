@@ -72,7 +72,7 @@ public class EmployeeServiceTest {
     void should_throw_exception_when_update_a_employee_and_active_false() {
         Employee employee = new Employee(1, "Mike", 20, "MALE", 10000.0, false);
         when(employeeRepository.findById(anyInt())).thenReturn(Optional.of(employee));
-        assertThrows(InvalidActiveEmployeeException.class, () -> employeeService.updateEmployee(1, employee));
+        assertThrows(InvalidActiveEmployeeException.class, () -> employeeService.updateEmployee(1, employeeMapper.toRequest(employee)));
     }
 
 }
