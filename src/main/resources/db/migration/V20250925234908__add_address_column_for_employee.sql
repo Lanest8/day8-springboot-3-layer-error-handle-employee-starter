@@ -1,0 +1,1 @@
+ALTER TABLE employee_db.employee ADD address varchar(255);

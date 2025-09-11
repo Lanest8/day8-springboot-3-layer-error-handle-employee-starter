@@ -17,6 +17,7 @@ public class Employee {
     private boolean active;
     @Column(name = "company_id")
     private Integer companyId;
+    private String address;
 
     public Integer getId() {
         return id;
@@ -68,6 +69,14 @@ public class Employee {
 
     public void setSalary(Double salary) {
         this.salary = salary;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public Integer getCompanyId() {
