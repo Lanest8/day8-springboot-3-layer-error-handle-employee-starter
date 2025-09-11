@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
@@ -21,6 +22,9 @@ public class CompanyControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
     private void createCompany() throws Exception {
         Gson gson = new Gson();
         String requestBody = gson.toJson(new Company("Spring"));
@@ -28,8 +32,9 @@ public class CompanyControllerTest {
     }
 
     @BeforeEach
-    void cleanCompanies() throws Exception {
-        mockMvc.perform(delete("/companies/all"));
+    void cleanCompanies() {
+        jdbcTemplate.execute("delete from company;");
+        jdbcTemplate.execute("ALTER TABLE company AUTO_INCREMENT=1");
     }
 
     @Test

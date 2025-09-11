@@ -17,11 +17,6 @@ public class CompanyController {
         this.companyService = companyService;
     }
 
-    @DeleteMapping("/all")
-    public void empty() {
-        companyService.deleteAllCompanies();
-    }
-
     @GetMapping
     public List<Company> getCompanies(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size) {
         return companyService.getCompanies(page, size);
