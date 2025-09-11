@@ -2,12 +2,7 @@ package com.example.demo.repository;
 
 
 import com.example.demo.entity.Employee;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +13,7 @@ import java.util.stream.Stream;
 public class EmployeeRepository {
     private final List<Employee> employees = new ArrayList<>();
 
-    public List<Employee> getEmployees(@RequestParam(required = false) String gender, @RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size) {
+    public List<Employee> getEmployees(String gender, Integer page, Integer size) {
         Stream<Employee> stream = employees.stream();
         if (gender != null) {
             stream = stream.filter(employee -> employee.getGender().compareToIgnoreCase(gender) == 0);
@@ -29,21 +24,21 @@ public class EmployeeRepository {
         return stream.toList();
     }
 
-    public Employee getEmployeeById(@PathVariable int id) {
+    public Employee getEmployeeById(int id) {
         return employees.stream()
                 .filter(employee -> Objects.equals(employee.getId(), id))
                 .findFirst()
                 .orElse(null);
     }
 
-    public Employee createEmployee(@RequestBody Employee employee) {
+    public Employee createEmployee(Employee employee) {
         employee.setId(employees.size() + 1);
         employee.setActiveStatus(true);
         employees.add(employee);
         return employee;
     }
 
-    public Employee updateEmployee(@PathVariable int id, @RequestBody Employee updatedEmployee) {
+    public Employee updateEmployee(int id, Employee updatedEmployee) {
         Employee found = getEmployeeById(id);
         found.setName(updatedEmployee.getName());
         found.setAge(updatedEmployee.getAge());
@@ -53,7 +48,7 @@ public class EmployeeRepository {
         return found;
     }
 
-    public void deleteEmployee(@PathVariable int id) {
+    public void deleteEmployee(int id) {
         employees.stream()
                 .filter(e -> e.getId() == id)
                 .forEach(e -> e.setActiveStatus(false));

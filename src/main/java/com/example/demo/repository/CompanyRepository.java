@@ -2,8 +2,6 @@ package com.example.demo.repository;
 
 import com.example.demo.entity.Company;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,20 +28,20 @@ public class CompanyRepository {
         return company;
     }
 
-    public Company updateCompany(@PathVariable int id, @RequestBody Company updatedCompany) {
+    public Company updateCompany(int id, Company updatedCompany) {
         Company found = getCompanyById(id);
         found.setName(updatedCompany.getName());
         return found;
     }
 
-    public Company getCompanyById(@PathVariable int id) {
+    public Company getCompanyById(int id) {
         return companies.stream()
                 .filter(company -> company.getId().equals(id))
                 .findFirst()
                 .orElse(null);
     }
 
-    public void deleteCompany(@PathVariable int id) {
+    public void deleteCompany(int id) {
         Company company = getCompanyById(id);
         companies.remove(company);
     }
