@@ -67,11 +67,7 @@ public class EmployeeService {
     }
 
     public EmployeeResponse updateEmployee(int id, Employee updatedEmployee) {
-        Optional<Employee> employeeOptional = employeeRepository.findById(id);
-        if (employeeOptional.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee not found with id: " + id);
-        }
-        Employee employee = employeeOptional.get();
+        Employee employee = employeeMapper.toEntity(getEmployeeById(id));
         if (!employee.isActive()) {
             throw new InvalidActiveEmployeeException("Employee is not active");
         }
