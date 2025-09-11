@@ -198,7 +198,7 @@ public class EmployeeControllerTest {
         mockMvc.perform(get("/employees/1")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.activeStatus").value(true));
+                .andExpect(jsonPath("$.active").value(true));
     }
 
     @Test
@@ -211,7 +211,7 @@ public class EmployeeControllerTest {
         mockMvc.perform(get("/employees/1")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.activeStatus").value(false));
+                .andExpect(jsonPath("$.active").value(false));
     }
 
     @Test

@@ -53,7 +53,7 @@ public class EmployeeServiceTest {
         Employee employee = new Employee(null, "Tom", 20, "MALE", 20000.0);
         when(employeeRepository.save(employee)).thenReturn(employee);
         Employee employeeResult = employeeService.createEmployee(employee);
-        assertTrue(employeeResult.isActiveStatus());
+        assertTrue(employeeResult.isActive());
     }
 
     @Test

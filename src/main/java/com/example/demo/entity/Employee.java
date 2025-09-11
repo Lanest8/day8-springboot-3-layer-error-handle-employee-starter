@@ -12,7 +12,7 @@ public class Employee {
     private Integer age;
     private String gender;
     private Double salary;
-    private boolean activeStatus;
+    private boolean active;
     @Column(name = "company_id")
     private Integer companyId;
 
@@ -64,12 +64,12 @@ public class Employee {
         this.companyId = companyId;
     }
 
-    public boolean isActiveStatus() {
-        return activeStatus;
+    public boolean isActive() {
+        return active;
     }
 
-    public void setActiveStatus(boolean activeStatus) {
-        this.activeStatus = activeStatus;
+    public void setActive(boolean activeStatus) {
+        this.active = activeStatus;
     }
 
     public Employee(Integer id, String name, Integer age, String gender, Double salary) {
@@ -78,16 +78,16 @@ public class Employee {
         this.age = age;
         this.gender = gender;
         this.salary = salary;
-        this.activeStatus = true;
+        this.active = true;
     }
 
-    public Employee(Integer id, String name, Integer age, String gender, Double salary, boolean activeStatus) {
+    public Employee(Integer id, String name, Integer age, String gender, Double salary, boolean active) {
         this.id = id;
         this.name = name;
         this.age = age;
         this.gender = gender;
         this.salary = salary;
-        this.activeStatus = activeStatus;
+        this.active = active;
     }
 
     public Employee() {

@@ -33,7 +33,7 @@ public class EmployeeRepository {
 
     public Employee createEmployee(Employee employee) {
         employee.setId(employees.size() + 1);
-        employee.setActiveStatus(true);
+        employee.setActive(true);
         employees.add(employee);
         return employee;
     }
@@ -44,13 +44,13 @@ public class EmployeeRepository {
         found.setAge(updatedEmployee.getAge());
         found.setGender(updatedEmployee.getGender());
         found.setSalary(updatedEmployee.getSalary());
-        found.setActiveStatus(updatedEmployee.isActiveStatus());
+        found.setActive(updatedEmployee.isActive());
         return found;
     }
 
     public void deleteEmployee(int id) {
         employees.stream()
                 .filter(e -> e.getId() == id)
-                .forEach(e -> e.setActiveStatus(false));
+                .forEach(e -> e.setActive(false));
     }
 }

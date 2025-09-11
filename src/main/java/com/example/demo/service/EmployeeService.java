@@ -1,7 +1,5 @@
 package com.example.demo.service;
 
-import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.bean.copier.CopyOptions;
 import com.example.demo.entity.Employee;
 import com.example.demo.exception.InvalidActiveEmployeeException;
 import com.example.demo.exception.InvalidAgeEmployeeException;
@@ -61,13 +59,13 @@ public class EmployeeService {
         if (employee.getAge() > 30 && employee.getSalary() < 20000) {
             throw new InvalidAgeEmployeeException("employee age is invalid");
         }
-        employee.setActiveStatus(true);
+        employee.setActive(true);
         return employeeRepository.save(employee);
     }
 
     public Employee updateEmployee(int id, Employee updatedEmployee) {
         Employee employee = getEmployeeById(id);
-        if (!employee.isActiveStatus()) {
+        if (!employee.isActive()) {
             throw new InvalidActiveEmployeeException("Employee is not active");
         }
         updatedEmployee.setId(id);
@@ -88,7 +86,7 @@ public class EmployeeService {
 
     public void deleteEmployee(int id) {
         Employee employee = getEmployeeById(id);
-        employee.setActiveStatus(false);
+        employee.setActive(false);
         employeeRepository.save(employee);
     }
 }
