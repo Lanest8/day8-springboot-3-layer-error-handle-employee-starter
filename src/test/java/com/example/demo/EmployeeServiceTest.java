@@ -3,32 +3,33 @@ package com.example.demo;
 import com.example.demo.entity.Employee;
 import com.example.demo.exception.InvalidActiveEmployeeException;
 import com.example.demo.exception.InvalidAgeEmployeeException;
-import com.example.demo.repository.EmployeeRepository;
+import com.example.demo.repository.IEmployeeRepository;
 import com.example.demo.service.EmployeeService;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest
-@AutoConfigureMockMvc
+@ExtendWith(SpringExtension.class)
 public class EmployeeServiceTest {
     @InjectMocks
     private EmployeeService employeeService;
 
     @Mock
-    private EmployeeRepository employeeRepository;
+    private IEmployeeRepository employeeRepository;
 
     @Test
     void should_throw_exception_when_create_a_employee() {
         Employee employee = new Employee(null, "Tom", 20, "MALE", 20000.0);
-        when(employeeRepository.createEmployee(employee)).thenReturn(employee);
+        when(employeeRepository.save(employee)).thenReturn(employee);
         Employee employeeResult = employeeService.createEmployee(employee);
         assertEquals(employee, employeeResult);
     }
@@ -50,7 +51,7 @@ public class EmployeeServiceTest {
     @Test
     void should_active_true_when_create_a_employee() {
         Employee employee = new Employee(null, "Tom", 20, "MALE", 20000.0);
-        when(employeeRepository.createEmployee(employee)).thenReturn(employee);
+        when(employeeRepository.save(employee)).thenReturn(employee);
         Employee employeeResult = employeeService.createEmployee(employee);
         assertTrue(employeeResult.isActiveStatus());
     }
@@ -58,15 +59,15 @@ public class EmployeeServiceTest {
     @Test
     void should_active_false_when_delete_a_employee() {
         Employee employee = new Employee(1, "Mike", 20, "MALE", 10000.0);
-        when(employeeRepository.getEmployeeById(anyInt())).thenReturn(employee);
+        when(employeeRepository.findById(anyInt())).thenReturn(Optional.of(employee));
         employeeService.deleteEmployee(1);
-        verify(employeeRepository).deleteEmployee(1);
+        verify(employeeRepository).save(employee);
     }
 
     @Test
     void should_throw_exception_when_update_a_employee_and_active_false() {
         Employee employee = new Employee(1, "Mike", 20, "MALE", 10000.0, false);
-        when(employeeRepository.getEmployeeById(anyInt())).thenReturn(employee);
+        when(employeeRepository.findById(anyInt())).thenReturn(Optional.of(employee));
         assertThrows(InvalidActiveEmployeeException.class, () -> employeeService.updateEmployee(1, employee));
     }
 
