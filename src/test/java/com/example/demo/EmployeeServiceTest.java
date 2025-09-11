@@ -1,6 +1,5 @@
 package com.example.demo;
 
-import com.example.demo.dto.EmployeeResponse;
 import com.example.demo.dto.mapper.EmployeeMapper;
 import com.example.demo.entity.Employee;
 import com.example.demo.exception.InvalidActiveEmployeeException;
