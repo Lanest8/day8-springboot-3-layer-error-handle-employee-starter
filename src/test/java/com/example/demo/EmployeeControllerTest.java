@@ -21,9 +21,6 @@ public class EmployeeControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
-    private EmployeeController employeeController;
-
     private void createJohnSmith() throws Exception {
         Gson gson = new Gson();
         String jane = gson.toJson(new Employee(null, "John Smith", 22, "FEMALE", 60000.0));
@@ -37,8 +34,8 @@ public class EmployeeControllerTest {
     }
 
     @BeforeEach
-    void cleanEmployees() {
-        employeeController.empty();
+    void cleanEmployees() throws Exception {
+        mockMvc.perform(delete("/employees/all"));
     }
 
     @Test
