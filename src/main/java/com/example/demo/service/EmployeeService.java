@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.bean.copier.CopyOptions;
 import com.example.demo.entity.Employee;
 import com.example.demo.exception.InvalidActiveEmployeeException;
 import com.example.demo.exception.InvalidAgeEmployeeException;
@@ -68,7 +70,9 @@ public class EmployeeService {
             throw new InvalidActiveEmployeeException("Employee is not active");
         }
         updatedEmployee.setId(id);
-        return employeeRepository.save(updatedEmployee);
+        CopyOptions copyOptions = CopyOptions.create().setIgnoreNullValue(true);
+        BeanUtil.copyProperties(updatedEmployee, employee, copyOptions);
+        return employeeRepository.save(employee);
     }
 
     public void deleteEmployee(int id) {
