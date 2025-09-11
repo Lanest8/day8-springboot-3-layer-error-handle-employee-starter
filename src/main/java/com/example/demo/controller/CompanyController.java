@@ -17,6 +17,7 @@ public class CompanyController {
         this.companyService = companyService;
     }
 
+    @DeleteMapping("/all")
     public void empty() {
         companyService.deleteAllCompanies();
     }

@@ -1,6 +1,5 @@
 package com.example.demo;
 
-import com.example.demo.controller.CompanyController;
 import com.example.demo.entity.Company;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,18 +21,15 @@ public class CompanyControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
-    private CompanyController companyController;
-
-    private Company createCompany() {
-        Company spring = new Company();
-        spring.setName("Spring");
-        return companyController.createCompany(spring);
+    private void createCompany() throws Exception {
+        Gson gson = new Gson();
+        String requestBody = gson.toJson(new Company("Spring"));
+        mockMvc.perform(post("/companies").contentType(MediaType.APPLICATION_JSON).content(requestBody));
     }
 
     @BeforeEach
-    void cleanCompanies() {
-        companyController.empty();
+    void cleanCompanies() throws Exception {
+        mockMvc.perform(delete("/companies/all"));
     }
 
     @Test
@@ -61,36 +57,36 @@ public class CompanyControllerTest {
 
     @Test
     void should_return_company_when_get_id_found() throws Exception {
-        Company company = createCompany();
+        createCompany();
 
-        MockHttpServletRequestBuilder request = get("/companies/" + company.getId())
+        MockHttpServletRequestBuilder request = get("/companies/" + 1)
                 .contentType(MediaType.APPLICATION_JSON);
         mockMvc.perform(request)
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(company.getId()))
-                .andExpect(jsonPath("$.name").value(company.getName()));
+                .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.name").value("Spring"));
     }
 
     @Test
     void should_return_company_when_put_with_id_found() throws Exception {
-        Company company = createCompany();
+        createCompany();
         Gson gson = new Gson();
         String requestBody = gson.toJson(new Company("Spring2"));
-        MockHttpServletRequestBuilder request = put("/companies/" + company.getId())
+        MockHttpServletRequestBuilder request = put("/companies/" + 1)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestBody);
 
         mockMvc.perform(request)
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(company.getId()))
+                .andExpect(jsonPath("$.id").value(1))
                 .andExpect(jsonPath("$.name").value("Spring2"));
     }
 
     @Test
     void should_return_no_content_when_delete_id_found() throws Exception {
-        Company company = createCompany();
+        createCompany();
 
-        MockHttpServletRequestBuilder request = delete("/companies/" + company.getId())
+        MockHttpServletRequestBuilder request = delete("/companies/" + 1)
                 .contentType(MediaType.APPLICATION_JSON);
 
         mockMvc.perform(request)
@@ -99,12 +95,11 @@ public class CompanyControllerTest {
 
     @Test
     void should_return_truncated_companies_when_page_size_is_limit() throws Exception {
-        Company spring = createCompany();
-        companyController.createCompany(spring);
-        companyController.createCompany(spring);
-        companyController.createCompany(spring);
-        companyController.createCompany(spring);
-        companyController.createCompany(spring);
+        createCompany();
+        createCompany();
+        createCompany();
+        createCompany();
+        createCompany();
         MockHttpServletRequestBuilder request = get("/companies?page=1&size=5")
                 .contentType(MediaType.APPLICATION_JSON);
 
