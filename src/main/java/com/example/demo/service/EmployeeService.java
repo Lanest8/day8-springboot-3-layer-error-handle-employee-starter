@@ -6,9 +6,6 @@ import com.example.demo.exception.InvalidAgeEmployeeException;
 import com.example.demo.repository.EmployeeRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -22,11 +19,11 @@ public class EmployeeService {
         this.employeeRepository = employeeRepository;
     }
 
-    public List<Employee> getEmployees(@RequestParam(required = false) String gender, @RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size) {
+    public List<Employee> getEmployees(String gender, Integer page, Integer size) {
         return employeeRepository.getEmployees(gender, page, size);
     }
 
-    public Employee getEmployeeById(@PathVariable int id) {
+    public Employee getEmployeeById(int id) {
         Employee employee = employeeRepository.getEmployeeById(id);
         if (employee == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee not found with id: " + id);
@@ -34,7 +31,7 @@ public class EmployeeService {
         return employee;
     }
 
-    public Employee createEmployee(@RequestBody Employee employee) {
+    public Employee createEmployee(Employee employee) {
         if (employee.getAge() == null) {
             throw new InvalidAgeEmployeeException("employee age is null");
         }
@@ -47,7 +44,7 @@ public class EmployeeService {
         return employeeRepository.createEmployee(employee);
     }
 
-    public Employee updateEmployee(@PathVariable int id, @RequestBody Employee updatedEmployee) {
+    public Employee updateEmployee(int id, Employee updatedEmployee) {
         Employee employee = employeeRepository.getEmployeeById(id);
         if (employee == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee not found with id: " + id);
