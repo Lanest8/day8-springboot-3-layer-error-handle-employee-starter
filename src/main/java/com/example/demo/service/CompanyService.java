@@ -1,7 +1,6 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.Company;
-import com.example.demo.repository.CompanyRepository;
 import com.example.demo.repository.ICompanyRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -26,7 +25,7 @@ public class CompanyService {
             return companyRepository.findAll();
         } else {
             Pageable pageable = PageRequest.of(page - 1, size);
-            return companyRepository.findCompanies(pageable);
+            return companyRepository.findAll(pageable).toList();
         }
     }
 
