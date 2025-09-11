@@ -13,6 +13,7 @@ import java.util.List;
 @RequestMapping("/companies")
 public class CompanyController {
     private final CompanyService companyService;
+
     public CompanyController(CompanyService companyService) {
         this.companyService = companyService;
     }
