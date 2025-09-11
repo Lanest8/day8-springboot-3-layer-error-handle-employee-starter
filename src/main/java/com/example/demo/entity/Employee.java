@@ -2,6 +2,8 @@ package com.example.demo.entity;
 
 import jakarta.persistence.*;
 
+import java.util.Objects;
+
 @Entity
 @Table(name = "employee")
 public class Employee {
@@ -56,6 +58,18 @@ public class Employee {
         this.salary = salary;
     }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public void setSalary(Double salary) {
+        this.salary = salary;
+    }
+
     public Integer getCompanyId() {
         return companyId;
     }
@@ -98,5 +112,18 @@ public class Employee {
         this.age = age;
         this.gender = gender;
         this.salary = salary;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Employee employee = (Employee) o;
+        return active == employee.active && Objects.equals(id, employee.id) && Objects.equals(name, employee.name) && Objects.equals(age, employee.age) && Objects.equals(gender, employee.gender) && Objects.equals(salary, employee.salary) && Objects.equals(companyId, employee.companyId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, age, gender, salary, active, companyId);
     }
 }
