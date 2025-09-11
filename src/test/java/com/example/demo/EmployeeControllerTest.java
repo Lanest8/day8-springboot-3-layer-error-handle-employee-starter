@@ -218,12 +218,10 @@ public class EmployeeControllerTest {
     void should_throw_exception_when_update_a_employee_and_active_false() throws Exception {
         createJohnSmith();
         Gson gson = new Gson();
-        String updateJohn = gson.toJson(new Employee("John Smith", 29, "MALE", 65000.0, false));
+        String updateJohn = gson.toJson(new Employee("John Smith", 29, "MALE", 65000.0));
 
-        mockMvc.perform(put("/employees/" + 1)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(updateJohn)
-        );
+        mockMvc.perform(delete("/employees/" + 1))
+                .andExpect(status().isNoContent());
 
         mockMvc.perform(put("/employees/" + 1)
                 .contentType(MediaType.APPLICATION_JSON)

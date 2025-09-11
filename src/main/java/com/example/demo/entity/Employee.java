@@ -75,11 +75,10 @@ public class Employee {
     public Employee() {
     }
 
-    public Employee(String name, Integer age, String gender, Double salary, boolean activeStatus) {
+    public Employee(String name, Integer age, String gender, Double salary) {
         this.name = name;
         this.age = age;
         this.gender = gender;
         this.salary = salary;
-        this.activeStatus = activeStatus;
     }
 }

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -70,8 +71,18 @@ public class EmployeeService {
             throw new InvalidActiveEmployeeException("Employee is not active");
         }
         updatedEmployee.setId(id);
-        CopyOptions copyOptions = CopyOptions.create().setIgnoreNullValue(true);
-        BeanUtil.copyProperties(updatedEmployee, employee, copyOptions);
+        if (!Objects.isNull(updatedEmployee.getName())) {
+            employee.setName(updatedEmployee.getName());
+        }
+        if (!Objects.isNull(updatedEmployee.getAge())) {
+            employee.setAge(updatedEmployee.getAge());
+        }
+        if (!Objects.isNull(updatedEmployee.getGender())) {
+            employee.setGender(updatedEmployee.getGender());
+        }
+        if (!Objects.isNull(updatedEmployee.getSalary())) {
+            employee.setSalary(updatedEmployee.getSalary());
+        }
         return employeeRepository.save(employee);
     }
 
