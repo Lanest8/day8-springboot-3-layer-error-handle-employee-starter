@@ -5,6 +5,7 @@ import com.example.demo.dto.EmployeeResponse;
 import com.example.demo.entity.Employee;
 import com.example.demo.service.EmployeeService;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,7 +31,7 @@ public class EmployeeController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public EmployeeResponse createEmployee(@RequestBody EmployeeRequest employeeRequest) {
+    public EmployeeResponse createEmployee(@Validated @RequestBody EmployeeRequest employeeRequest) {
         return employeeService.createEmployee(employeeRequest);
     }
 
