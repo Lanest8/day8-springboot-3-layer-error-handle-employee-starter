@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.EmployeeRequest;
 import com.example.demo.dto.EmployeeResponse;
 import com.example.demo.dto.mapper.EmployeeMapper;
 import com.example.demo.entity.Employee;
@@ -52,7 +53,8 @@ public class EmployeeService {
         return employeeMapper.toResponse(employee.get());
     }
 
-    public EmployeeResponse createEmployee(Employee employee) {
+    public EmployeeResponse createEmployee(EmployeeRequest employeeRequest) {
+        Employee employee = employeeMapper.toEntity(employeeRequest);
         if (employee.getAge() == null) {
             throw new InvalidAgeEmployeeException("employee age is null");
         }

@@ -34,7 +34,7 @@ public class EmployeeServiceTest {
     void should_throw_exception_when_create_a_employee() {
         Employee employee = new Employee(1, "Tom", 20, "MALE", 20000.0);
         when(employeeRepository.save(employee)).thenReturn(employee);
-        Employee employeeResult = employeeMapper.toEntity(employeeService.createEmployee(employee));
+        Employee employeeResult = employeeMapper.toEntity(employeeService.createEmployee(employeeMapper.toRequest(employee)));
         assertEquals(employee, employeeResult);
     }
 
@@ -42,21 +42,21 @@ public class EmployeeServiceTest {
     void should_throw_exception_when_create_a_employee_of_greater_than_65_or_less_than_18() {
         Employee employee = new Employee(null, "Tom", 16, "MALE", 20000.0);
         Employee employee2 = new Employee(null, "Tom", 16, "MALE", 20000.0);
-        assertThrows(InvalidAgeEmployeeException.class, () -> employeeMapper.toEntity(employeeService.createEmployee(employee)));
-        assertThrows(InvalidAgeEmployeeException.class, () -> employeeMapper.toEntity(employeeService.createEmployee(employee2)));
+        assertThrows(InvalidAgeEmployeeException.class, () -> employeeMapper.toEntity(employeeService.createEmployee(employeeMapper.toRequest(employee))));
+        assertThrows(InvalidAgeEmployeeException.class, () -> employeeMapper.toEntity(employeeService.createEmployee(employeeMapper.toRequest(employee2))));
     }
 
     @Test
     void should_throw_exception_when_create_a_employee_of_age_greater_than_30_and_salary_less_than_20000() {
         Employee employee = new Employee(null, "Tom", 31, "MALE", 10000.0);
-        assertThrows(InvalidAgeEmployeeException.class, () -> employeeMapper.toEntity(employeeService.createEmployee(employee)));
+        assertThrows(InvalidAgeEmployeeException.class, () -> employeeMapper.toEntity(employeeService.createEmployee(employeeMapper.toRequest(employee))));
     }
 
     @Test
     void should_active_true_when_create_a_employee() {
         Employee employee = new Employee(null, "Tom", 20, "MALE", 20000.0);
         when(employeeRepository.save(employee)).thenReturn(employee);
-        Employee employeeResult = employeeMapper.toEntity(employeeService.createEmployee(employee));
+        Employee employeeResult = employeeMapper.toEntity(employeeService.createEmployee(employeeMapper.toRequest(employee)));
         assertTrue(employeeResult.isActive());
     }
 

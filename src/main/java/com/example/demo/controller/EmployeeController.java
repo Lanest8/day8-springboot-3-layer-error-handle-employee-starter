@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.EmployeeRequest;
 import com.example.demo.dto.EmployeeResponse;
 import com.example.demo.entity.Employee;
 import com.example.demo.service.EmployeeService;
@@ -29,8 +30,8 @@ public class EmployeeController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public EmployeeResponse createEmployee(@RequestBody Employee employee) {
-        return employeeService.createEmployee(employee);
+    public EmployeeResponse createEmployee(@RequestBody EmployeeRequest employeeRequest) {
+        return employeeService.createEmployee(employeeRequest);
     }
 
     @PutMapping("/{id}")

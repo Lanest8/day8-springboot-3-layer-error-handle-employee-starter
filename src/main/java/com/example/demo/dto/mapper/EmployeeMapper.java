@@ -1,5 +1,6 @@
 package com.example.demo.dto.mapper;
 
+import com.example.demo.dto.EmployeeRequest;
 import com.example.demo.dto.EmployeeResponse;
 import com.example.demo.entity.Employee;
 import org.springframework.beans.BeanUtils;
@@ -23,5 +24,17 @@ public class EmployeeMapper {
         Employee employee = new Employee();
         BeanUtils.copyProperties(employeeResponse, employee);
         return employee;
+    }
+
+    public Employee toEntity(EmployeeRequest employeeRequest) {
+        Employee employee = new Employee();
+        BeanUtils.copyProperties(employeeRequest, employee);
+        return employee;
+    }
+
+    public EmployeeRequest toRequest(Employee employee) {
+        EmployeeRequest employeeRequest = new EmployeeRequest();
+        BeanUtils.copyProperties(employee, employeeRequest);
+        return employeeRequest;
     }
 }
