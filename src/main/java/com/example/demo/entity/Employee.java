@@ -1,9 +1,11 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
 @Table(name = "employee")
+@DynamicUpdate
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

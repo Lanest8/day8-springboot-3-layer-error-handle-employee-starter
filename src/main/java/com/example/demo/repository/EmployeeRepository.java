@@ -53,8 +53,4 @@ public class EmployeeRepository {
                 .filter(e -> e.getId() == id)
                 .forEach(e -> e.setActiveStatus(false));
     }
-
-    public void deleteEmployeeAll() {
-        employees.clear();
-    }
 }
